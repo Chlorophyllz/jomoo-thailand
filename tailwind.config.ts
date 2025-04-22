@@ -19,6 +19,13 @@ export default {
 		},
 		extend: {
 			colors: {
+				jomoo: {
+					background: '#121212',
+					dark: '#1A1A1A',
+					accent: '#00B0F0',
+					text: '#FFFFFF',
+					muted: '#CCCCCC'
+				},
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
