@@ -167,6 +167,30 @@ export type Database = {
         }
         Relationships: []
       }
+      jomoo_master_file: {
+        Row: {
+          created_at: string
+          file_name: string
+          file_name_en: string
+          file_url: string
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          file_name: string
+          file_name_en: string
+          file_url: string
+          id?: string
+        }
+        Update: {
+          created_at?: string
+          file_name?: string
+          file_name_en?: string
+          file_url?: string
+          id?: string
+        }
+        Relationships: []
+      }
       master_project: {
         Row: {
           created_at: string

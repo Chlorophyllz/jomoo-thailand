@@ -1,7 +1,6 @@
-
 import React, { useState } from 'react';
 import Layout from '../components/Layout';
-import { FileDown } from 'lucide-react';
+import { FileDownloads } from '../components/FileDownloads';
 
 const Form: React.FC = () => {
   const [name, setName] = useState('');
@@ -10,14 +9,11 @@ const Form: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // This would normally connect to a backend service
     console.log('Form submitted:', { name, email });
     setSubmitted(true);
-    // Reset form
     setName('');
     setEmail('');
     
-    // Show success message briefly
     setTimeout(() => {
       setSubmitted(false);
     }, 3000);
@@ -33,7 +29,6 @@ const Form: React.FC = () => {
               Please fill out this form to receive updates and product information from JOMOO Thailand.
             </p>
 
-            {/* Form Section */}
             <div className="bg-jomoo-dark rounded-lg p-8 mb-12">
               <h2 className="text-2xl font-bold mb-6">Contact Information</h2>
               
@@ -79,40 +74,13 @@ const Form: React.FC = () => {
               </form>
             </div>
 
-            {/* Download Section */}
             <div className="bg-jomoo-dark rounded-lg p-8">
               <h2 className="text-2xl font-bold mb-6">Download Files</h2>
               <p className="text-jomoo-muted mb-8">
                 Access our product catalogs and technical specifications below.
               </p>
               
-              <div className="space-y-4">
-                <div className="border border-gray-700 rounded-lg p-4">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="font-semibold text-jomoo-text">JOMOO Product Catalog 2023</h3>
-                      <p className="text-jomoo-muted text-sm">PDF - 12.5 MB</p>
-                    </div>
-                    <button className="btn-outline flex items-center">
-                      <FileDown className="mr-2 h-5 w-5" />
-                      Download
-                    </button>
-                  </div>
-                </div>
-                
-                <div className="border border-gray-700 rounded-lg p-4">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="font-semibold text-jomoo-text">Technical Specifications</h3>
-                      <p className="text-jomoo-muted text-sm">PDF - 8.3 MB</p>
-                    </div>
-                    <button className="btn-outline flex items-center">
-                      <FileDown className="mr-2 h-5 w-5" />
-                      Download
-                    </button>
-                  </div>
-                </div>
-              </div>
+              <FileDownloads />
               
               <div className="mt-8 p-4 bg-gray-800 rounded-md">
                 <p className="text-jomoo-muted text-sm text-center">
