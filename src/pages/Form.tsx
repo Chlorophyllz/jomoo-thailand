@@ -1,22 +1,46 @@
+
 import React, { useState } from 'react';
+import { useToast } from "@/hooks/use-toast";
 import Layout from '../components/Layout';
 import { FileDownloads } from '../components/FileDownloads';
+import { supabase } from "@/integrations/supabase/client";
 
 const Form: React.FC = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [submitted, setSubmitted] = useState(false);
+  const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', { name, email });
-    setSubmitted(true);
-    setName('');
-    setEmail('');
     
-    setTimeout(() => {
-      setSubmitted(false);
-    }, 3000);
+    try {
+      const { error } = await supabase
+        .from('jomoo_trans_information')
+        .insert([
+          {
+            info_name: name,
+            info_email: email,
+            sts: true
+          }
+        ]);
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Your information has been submitted successfully.",
+      });
+
+      setName('');
+      setEmail('');
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "There was a problem submitting your information.",
+      });
+    }
   };
 
   return (
@@ -65,12 +89,6 @@ const Form: React.FC = () => {
                 >
                   Submit
                 </button>
-                
-                {submitted && (
-                  <div className="mt-4 p-3 bg-green-900 text-green-100 rounded-md text-center">
-                    Thank you! Your information has been submitted successfully.
-                  </div>
-                )}
               </form>
             </div>
 

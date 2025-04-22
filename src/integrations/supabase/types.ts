@@ -191,6 +191,36 @@ export type Database = {
         }
         Relationships: []
       }
+      jomoo_trans_information: {
+        Row: {
+          created_at: string
+          id: number
+          info_desc: string | null
+          info_email: string | null
+          info_name: string | null
+          info_type: string | null
+          sts: boolean | null
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          info_desc?: string | null
+          info_email?: string | null
+          info_name?: string | null
+          info_type?: string | null
+          sts?: boolean | null
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          info_desc?: string | null
+          info_email?: string | null
+          info_name?: string | null
+          info_type?: string | null
+          sts?: boolean | null
+        }
+        Relationships: []
+      }
       master_project: {
         Row: {
           created_at: string
