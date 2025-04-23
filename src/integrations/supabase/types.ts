@@ -191,6 +191,30 @@ export type Database = {
         }
         Relationships: []
       }
+      jomoo_master_role: {
+        Row: {
+          created_at: string
+          role_desc: string | null
+          role_id: number
+          role_name: string | null
+          sts: boolean | null
+        }
+        Insert: {
+          created_at?: string
+          role_desc?: string | null
+          role_id?: number
+          role_name?: string | null
+          sts?: boolean | null
+        }
+        Update: {
+          created_at?: string
+          role_desc?: string | null
+          role_id?: number
+          role_name?: string | null
+          sts?: boolean | null
+        }
+        Relationships: []
+      }
       jomoo_trans_information: {
         Row: {
           created_at: string
@@ -217,6 +241,39 @@ export type Database = {
           info_email?: string | null
           info_name?: string | null
           info_type?: string | null
+          sts?: boolean | null
+        }
+        Relationships: []
+      }
+      jomoo_trans_section_content: {
+        Row: {
+          created_at: string
+          id: number
+          jm_desc: string | null
+          jm_explore: boolean | null
+          jm_img: string | null
+          jm_name: string | null
+          jm_url: string | null
+          sts: boolean | null
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          jm_desc?: string | null
+          jm_explore?: boolean | null
+          jm_img?: string | null
+          jm_name?: string | null
+          jm_url?: string | null
+          sts?: boolean | null
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          jm_desc?: string | null
+          jm_explore?: boolean | null
+          jm_img?: string | null
+          jm_name?: string | null
+          jm_url?: string | null
           sts?: boolean | null
         }
         Relationships: []

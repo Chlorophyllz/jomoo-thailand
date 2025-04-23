@@ -1,150 +1,193 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '../components/Layout';
 import { Link } from 'react-router-dom';
+import { QRCodeSVG } from 'qrcode.react';
 import { ArrowRight } from 'lucide-react';
+import { supabase } from "@/integrations/supabase/client";
+
+interface SectionContent {
+  id: number;
+  jm_name: string;
+  jm_desc: string;
+  jm_url: string;
+  jm_img: string;
+  jm_explore: boolean;
+}
 
 const Home: React.FC = () => {
+  const [sectionContent, setSectionContent] = useState<SectionContent[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchSectionContent = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('jomoo_trans_section_content')
+          .select('*')
+          .eq('sts', true)
+          .order('id', { ascending: true });
+
+        if (error) {
+          console.error('Error fetching section content:', error);
+        } else {
+          setSectionContent(data || []);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchSectionContent();
+  }, []);
+
   return (
     <Layout>
-      {/* Hero Section */}
+      {/* Banner Section */}
       <section className="relative h-screen flex items-center">
         <div 
-          className="absolute inset-0 bg-black" 
+          className="absolute inset-0 bg-black bg-opacity-60" 
           style={{
-            backgroundImage: 'url("https://images.unsplash.com/photo-1600566752355-35792bedcfea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80")', 
+            backgroundImage: 'url("https://djpvakobbvnavfyvibah.supabase.co/storage/v1/object/public/jomoo-banner.png")', 
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            opacity: 0.7
           }}
         ></div>
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 leading-tight">
-              Premium Bathroom & Kitchen Solutions
+              JOMOO Stuns at Casa Décor 2025, Redefining Luxury Bathroom Living
             </h1>
-            <p className="text-jomoo-muted text-lg md:text-xl mb-8 max-w-2xl">
-              Experience luxury and innovation with JOMOO Thailand's premium range of bathroom and kitchen products.
-            </p>
-            <Link to="/contact" className="btn-primary inline-flex items-center">
-              Contact Us <ArrowRight className="ml-2 h-5 w-5" />
+            <Link to="/form" className="btn-primary inline-flex items-center mt-8">
+              Get our Catalog <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Featured Products Section */}
-      <section className="py-16 md:py-24 bg-jomoo-background">
+      {/* Contact Us Section */}
+      <section className="py-16 md:py-24 bg-jomoo-dark">
         <div className="container mx-auto px-4 md:px-6">
-          <h2 className="section-title text-center">Featured Products</h2>
-          <p className="text-jomoo-muted text-center max-w-3xl mx-auto mb-12">
-            Discover our premium selection of bathroom and kitchen solutions that combine elegant design with innovative technology.
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Product Card 1 */}
-            <div className="bg-jomoo-dark rounded-lg overflow-hidden transition-transform duration-300 hover:-translate-y-2">
-              <div className="h-64 overflow-hidden">
-                <img 
-                  src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" 
-                  alt="Modern Faucet" 
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+          <h2 className="section-title text-center mb-12">Contact Us</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+            {/* Left Column - QR Code */}
+            <div className="flex flex-col items-center">
+              <div className="bg-white rounded-lg p-6 mb-6 shadow-lg">
+                <QRCodeSVG
+                  value={window.location.origin + "/form"}
+                  size={220}
+                  bgColor="#FFFFFF"
+                  fgColor="#121212"
+                  className="rounded"
+                  style={{ width: 220, height: 220 }}
                 />
               </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold mb-2">Modern Faucets</h3>
-                <p className="text-jomoo-muted mb-4">Elegant design meets innovative technology for your kitchen and bathroom.</p>
-                <a href="#" className="text-jomoo-accent hover:underline inline-flex items-center">
-                  Explore <ArrowRight className="ml-1 h-4 w-4" />
-                </a>
-              </div>
+              <Link
+                to="/form"
+                className="btn-primary inline-flex items-center"
+              >
+                Go to Information Form <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
             </div>
-
-            {/* Product Card 2 */}
-            <div className="bg-jomoo-dark rounded-lg overflow-hidden transition-transform duration-300 hover:-translate-y-2">
-              <div className="h-64 overflow-hidden">
-                <img 
-                  src="https://images.unsplash.com/photo-1620626011761-996317b8d101?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1769&q=80" 
-                  alt="Luxury Shower" 
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                />
+            
+            {/* Right Column - Contact Information */}
+            <div className="text-jomoo-text space-y-4">
+              <div>
+                <h3 className="text-xl font-bold mb-2">JOMOO Thailand Headquarters</h3>
+                <p className="text-jomoo-muted">123 Sukhumvit Road</p>
+                <p className="text-jomoo-muted">Bangkok 10110, Thailand</p>
               </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold mb-2">Luxury Showers</h3>
-                <p className="text-jomoo-muted mb-4">Transform your daily routine into a spa-like experience with our premium showers.</p>
-                <a href="#" className="text-jomoo-accent hover:underline inline-flex items-center">
-                  Explore <ArrowRight className="ml-1 h-4 w-4" />
-                </a>
+              
+              <div>
+                <h3 className="text-xl font-bold mb-2">Get in Touch</h3>
+                <p className="text-jomoo-muted">Email: contact@jomoo.th</p>
+                <p className="text-jomoo-muted">Phone: +66 2 123 4567</p>
               </div>
-            </div>
-
-            {/* Product Card 3 */}
-            <div className="bg-jomoo-dark rounded-lg overflow-hidden transition-transform duration-300 hover:-translate-y-2">
-              <div className="h-64 overflow-hidden">
-                <img 
-                  src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80" 
-                  alt="Smart Toilet" 
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold mb-2">Smart Toilets</h3>
-                <p className="text-jomoo-muted mb-4">Cutting-edge technology for unparalleled comfort and hygiene in your bathroom.</p>
-                <a href="#" className="text-jomoo-accent hover:underline inline-flex items-center">
-                  Explore <ArrowRight className="ml-1 h-4 w-4" />
-                </a>
+              
+              <div>
+                <h3 className="text-xl font-bold mb-2">Opening Hours</h3>
+                <p className="text-jomoo-muted">Monday to Friday: 9:00 AM - 6:00 PM</p>
+                <p className="text-jomoo-muted">Saturday: 10:00 AM - 4:00 PM</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* About Section */}
+      {/* Introduction Paragraph Section */}
+      <section className="py-16 md:py-24 bg-jomoo-background">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="max-w-4xl mx-auto">
+            <p className="text-jomoo-text text-lg leading-relaxed">
+              Global smart bathroom leader JOMOO has made a stunning appearance at Casa Décor 2025, Spain's premier design event, unveiling a groundbreaking sensory art installation. Set within a 19th-century heritage building on Sagasta Street in Madrid, this striking debut marks the official launch of JOMOO's strategic expansion into Europe. Designed in collaboration with renowned creative firm Summum Studio, JOMOO's themed exhibition "BRUMA: the Ritual of Senses" merges cutting-edge technology with disruptive, future-forward aesthetics. The installation has quickly become one of the most talked-about highlights of this year's Casa Décor.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Dynamic Content Section */}
       <section className="py-16 md:py-24 bg-jomoo-dark">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="flex flex-col md:flex-row items-center">
-            <div className="md:w-1/2 mb-8 md:mb-0 md:pr-12">
-              <h2 className="section-title">About JOMOO Thailand</h2>
-              <p className="text-jomoo-muted mb-6">
-                JOMOO Thailand is a leading provider of premium bathroom and kitchen products, 
-                combining innovative technology with elegant design to create products that enhance everyday living.
-              </p>
-              <p className="text-jomoo-muted mb-6">
-                With a commitment to quality and sustainability, we strive to deliver products 
-                that not only look beautiful but also contribute to a more sustainable future.
-              </p>
-              <Link to="#" className="btn-outline inline-block">
-                Learn More
-              </Link>
+          <h2 className="section-title text-center mb-16">Our Products</h2>
+          
+          {isLoading ? (
+            <div className="text-center py-12">
+              <p className="text-jomoo-text">Loading content...</p>
             </div>
-            <div className="md:w-1/2">
-              <div className="rounded-lg overflow-hidden">
-                <img 
-                  src="https://images.unsplash.com/photo-1571781565036-d3f759be73e4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80" 
-                  alt="About JOMOO" 
-                  className="w-full h-auto"
-                />
-              </div>
+          ) : (
+            <div className="space-y-24">
+              {sectionContent.map((item) => (
+                <div 
+                  key={item.id}
+                  className={`grid grid-cols-1 ${item.id % 2 === 1 ? 'lg:grid-cols-[1fr_1.2fr]' : 'lg:grid-cols-[1.2fr_1fr]'} gap-8 items-center`}
+                >
+                  {/* Image Section (Left for odd IDs, Right for even IDs) */}
+                  <div className={`${item.id % 2 === 0 ? 'lg:order-2' : ''} h-full`}>
+                    <div className="h-full w-full overflow-hidden rounded-lg">
+                      <img 
+                        src={item.jm_img} 
+                        alt={item.jm_name} 
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                  
+                  {/* Text Section (Right for odd IDs, Left for even IDs) */}
+                  <div className={`${item.id % 2 === 0 ? 'lg:order-1' : ''} flex flex-col justify-center h-full`}>
+                    <h3 className="text-2xl md:text-3xl font-bold text-jomoo-text mb-4">{item.jm_name}</h3>
+                    <p className="text-jomoo-muted text-lg mb-6">{item.jm_desc}</p>
+                    
+                    {item.jm_explore && (
+                      <a 
+                        href={item.jm_url} 
+                        target="_blank"
+                        rel="noopener noreferrer" 
+                        className="btn-outline inline-flex items-center self-start"
+                      >
+                        Explore more <ArrowRight className="ml-2 h-5 w-5" />
+                      </a>
+                    )}
+                  </div>
+                </div>
+              ))}
             </div>
-          </div>
+          )}
         </div>
       </section>
 
       {/* Call to Action */}
       <section className="py-16 bg-jomoo-accent">
         <div className="container mx-auto px-4 md:px-6 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Ready to Elevate Your Home?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Ready to Elevate Your Bathroom Experience?</h2>
           <p className="text-white opacity-90 max-w-2xl mx-auto mb-8">
-            Discover how JOMOO Thailand's premium products can transform your bathroom and kitchen spaces.
+            Get our latest smart bathroom catalog and discover how JOMOO can transform your space.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link to="/contact" className="bg-white text-jomoo-accent hover:bg-opacity-90 px-6 py-3 rounded-md font-medium transition-all duration-300">
-              Contact Us
-            </Link>
-            <Link to="/form" className="border border-white text-white hover:bg-white hover:text-jomoo-accent px-6 py-3 rounded-md font-medium transition-all duration-300">
-              Information Form
-            </Link>
-          </div>
+          <Link to="/form" className="bg-white text-jomoo-accent hover:bg-opacity-90 px-6 py-3 rounded-md font-medium transition-all duration-300">
+            Download Catalog
+          </Link>
         </div>
       </section>
     </Layout>
