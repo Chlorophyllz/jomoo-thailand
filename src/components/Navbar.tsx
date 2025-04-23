@@ -37,10 +37,10 @@ const Navbar: React.FC = () => {
             <Link to="/" className="nav-link">
               Home
             </Link>
-            <Link to="#" className="nav-link">
+            <Link to="/" className="nav-link">
               Products
             </Link>
-            <Link to="#" className="nav-link">
+            <Link to="/" className="nav-link">
               About Us
             </Link>
             <Link to="/contact" className="nav-link">
