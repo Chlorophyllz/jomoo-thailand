@@ -1,10 +1,10 @@
-
 import React, { useEffect, useState } from 'react';
 import Layout from '../components/Layout';
 import { Link } from 'react-router-dom';
 import { QRCodeSVG } from 'qrcode.react';
 import { ArrowRight } from 'lucide-react';
 import { supabase } from "@/integrations/supabase/client";
+import JomooContentSection from "@/components/JomooContentSection";
 
 interface SectionContent {
   id: number;
@@ -50,9 +50,9 @@ const Home: React.FC = () => {
         <div 
           className="absolute inset-0 bg-black bg-opacity-60" 
           style={{
-            backgroundImage: 'url("https://djpvakobbvnavfyvibah.supabase.co/storage/v1/object/public/jomoo-banner.png")', 
+            backgroundImage: 'url("https://djpvakobbvnavfyvibah.supabase.co/storage/v1/object/sign/file/jomoo-banner.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InN0b3JhZ2UtdXJsLXNpZ25pbmcta2V5XzRmMDAwZjQ0LWRiYzgtNGNmZi05ZGRkLTgzMGQxZWJmNTg2OSJ9.eyJ1cmwiOiJmaWxlL2pvbW9vLWJhbm5lci5wbmciLCJpYXQiOjE3NDUzOTQ1MDgsImV4cCI6MTc3NjkzMDUwOH0.4klnPzOd4OKdRrFMvkf5Qj85rM0HmA4AOxPspug7cUI")', 
             backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            backgroundPosition: 'center center'
           }}
         ></div>
         <div className="container mx-auto px-4 md:px-6 relative z-10">
@@ -65,6 +65,20 @@ const Home: React.FC = () => {
             </Link>
           </div>
         </div>
+      </section>
+
+      {/* Introduction Paragraph Section */}
+      <section className="py-16 md:py-24 bg-jomoo-background">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="max-w-4xl mx-auto">
+            <p className="text-jomoo-text text-lg leading-relaxed">
+              Global smart bathroom leader JOMOO has made a stunning appearance at Casa Décor 2025, Spain's premier design event, unveiling a groundbreaking sensory art installation. Set within a 19th-century heritage building on Sagasta Street in Madrid, this striking debut marks the official launch of JOMOO's strategic expansion into Europe. Designed in collaboration with renowned creative firm Summum Studio, JOMOO's themed exhibition "BRUMA: the Ritual of Senses" merges cutting-edge technology with disruptive, future-forward aesthetics. The installation has quickly become one of the most talked-about highlights of this year's Casa Décor.
+            </p>
+          </div>
+        </div>
+        
+        {/* Insert JomooContentSection here */}
+        <JomooContentSection />
       </section>
 
       {/* Contact Us Section */}
@@ -113,17 +127,6 @@ const Home: React.FC = () => {
                 <p className="text-jomoo-muted">Saturday: 10:00 AM - 4:00 PM</p>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Introduction Paragraph Section */}
-      <section className="py-16 md:py-24 bg-jomoo-background">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="max-w-4xl mx-auto">
-            <p className="text-jomoo-text text-lg leading-relaxed">
-              Global smart bathroom leader JOMOO has made a stunning appearance at Casa Décor 2025, Spain's premier design event, unveiling a groundbreaking sensory art installation. Set within a 19th-century heritage building on Sagasta Street in Madrid, this striking debut marks the official launch of JOMOO's strategic expansion into Europe. Designed in collaboration with renowned creative firm Summum Studio, JOMOO's themed exhibition "BRUMA: the Ritual of Senses" merges cutting-edge technology with disruptive, future-forward aesthetics. The installation has quickly become one of the most talked-about highlights of this year's Casa Décor.
-            </p>
           </div>
         </div>
       </section>
